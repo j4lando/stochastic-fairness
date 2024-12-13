@@ -14,52 +14,6 @@ def load_csv(model_output_file, output_file):
     return model_output, expected_output_data
 
 
-
-def apply_noise(expected_output_data, noise_chance, positive_noise_percentage):
-    """Apply noise to the expected output data based on user-defined percentages."""
-    noisy_data = expected_output_data.copy()
-    for idx, row in noisy_data.iterrows():
-        # Decide whether to add noise
-        if random.random() < noise_chance / 100:
-            # Decide whether noise flips to positive or negative
-            if random.random() < positive_noise_percentage / 100:
-                noisy_data.at[idx, 'output'] = 1  # Positive noise
-            else:
-                noisy_data.at[idx, 'output'] = 0  # Negative noise
-    print("Noise applied successfully!")
-    return noisy_data
-
-def save_csv(data, filename):
-    """Save data to a CSV file."""
-    try:
-        data.to_csv(filename, index=False, header=False)
-        print(f"Data saved to {filename}.")
-    except Exception as e:
-        print(f"Error saving file: {e}")
-
-def compare_statistics(model_output, model_expected_output):
-    """Compare model output to expected output and print statistics."""
-    # Merge data on 'id' to align outputs
-    merged = pd.merge(model_output, model_expected_output, on='id', suffixes=('_predicted', '_expected'))
-    
-    # Extract necessary columns
-    predicted = merged['output_predicted']
-    expected = merged['output_expected']
-    
-    # Calculate statistics
-    total = len(merged)
-    correct = (predicted == expected).sum()
-    accuracy = correct / total * 100
-    
-    false_positives = ((predicted == 1) & (expected == 0)).sum() / total * 100
-    false_negatives = ((predicted == 0) & (expected == 1)).sum() / total * 100
-    
-    # Print statistics
-    print("Comparison Statistics:")
-    print(f"Overall Accuracy: {accuracy:.2f}%")
-    print(f"False Positives: {false_positives:.2f}%")
-    print(f"False Negatives: {false_negatives:.2f}%")
-    
 def main():
     print("Welcome to the Data Noise Generator!")
     
