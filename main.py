@@ -1,6 +1,6 @@
-import random
 import pandas as pd
 from generater import generate_data
+from noise import apply_noise, apply_noise_simulation
 
 def load_csv(model_output_file, output_file):
     """Load data from model_output and output CSV files into pandas DataFrames."""
@@ -44,16 +44,20 @@ def main():
 
     while True:
         print("\nPlease choose an option:")
-        print("1. Apply noise to the model_output")
+        print("1. Run a simulation that applies noise to the model_output")
         print("2. Quit")  
 
         choice = input("Enter your choice (1/2): ").strip()
         
+        """if choice == '1':
+            noise_chance = float(input("Enter the percentage chance to apply noise (0-100): ").strip())
+            positive_noise_percentage = float(input("Enter the percentage of positive noise (0-100): ").strip())
+            apply_noise(model_output_data, expected_output_data, noise_chance, positive_noise_percentage)"""
         if choice == '1':
             noise_chance = float(input("Enter the percentage chance to apply noise (0-100): ").strip())
             positive_noise_percentage = float(input("Enter the percentage of positive noise (0-100): ").strip())
-            noisy_expected_output = apply_noise(model_output_data, noise_chance, positive_noise_percentage)
-            compare_statistics(noisy_expected_output, expected_output_data)
+            epochs = int(input("Number of times to run the simulation: ").strip())
+            apply_noise_simulation(model_output_data, expected_output_data, noise_chance, positive_noise_percentage, epochs)
         elif choice == '2':
             print("Exiting the program. Goodbye!")
             return 
