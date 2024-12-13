@@ -32,7 +32,7 @@ def main():
             break
         elif choice == '2':
             num_samples = int(input("Enter the number of samples to generate: ").strip())
-            accuracy = int(input("Enter the accuracy of the samples generated: ").strip())
+            accuracy = int(input("Enter the accuracy of the samples generated (0-100): ").strip())
             model_output_data, expected_output_data = generate_data(num_samples, accuracy)
             break
         elif choice == '3':

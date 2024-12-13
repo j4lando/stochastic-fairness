@@ -13,8 +13,7 @@ def apply_noise(model_output_data, noise_chance, positive_noise_percentage):
                 noisy_data.at[idx, 'output'] = 0  # Negative noise
 
     return noisy_data
-    accuracy, false_positives, false_negatives = compare_statistics(noisy_data, model_expected_output)
-    display_statistics(accuracy, false_positives, false_negatives)
+
 
 def compare_statistics(model_output, model_expected_output):
     """Compare model output to expected output and print statistics."""
